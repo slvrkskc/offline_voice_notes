@@ -163,7 +163,7 @@ Paralelde yapılabilecek diğer işler:
 | Her spike'ın **tek bir sorusu var** | O soruya cevap bulduğun an spike biter. "Biraz daha iyileştirsem" tuzağına düşme |
 | Sonucu mimari dokümana geri yaz | ⚠️ işaretli varsayımları ✅'e çevirmek — v0.2'de S11/S12/V11/V12 için yaptığımız gibi |
 
-> **Portföy notu:** `docs/spikes/` klasörü, işe alım görüşmesinde kodun kendisinden daha etkili olabilir. "Ölçtüm, yazdım, karar verdim, kararı belgeledim" döngüsü kıdemli mühendis davranışıdır ve 3. sınıf bir öğrencide beklenmez.
+> **Portföy notu:** `docs/spikes/` klasörü, işe alım görüşmesinde kodun kendisinden daha etkili olabilir. "Ölçtüm, yazdım, karar verdim, kararı belgeledim" döngüsü kıdemli mühendis davranışıdır ve çoğu projede eksiktir.
 
 ---
 

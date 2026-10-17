@@ -67,7 +67,7 @@ Android Studio'nun "New Project" şablonu `app/src/main/AndroidManifest.xml` dos
 ### ✅ Yap: baseline'ı ayrı bir klasörde üret, sonra kopyala
 
 1. Android Studio → **New Project** → **Empty Activity** (Compose)
-2. Konum: **`C:\Users\kiska\Desktop\_as-baseline`** (geçici, bu projenin dışında)
+2. Konum: **`%USERPROFILE%\Desktop\_as-baseline`** (geçici, bu projenin dışında)
 3. Gradle sync'in bitmesini bekle — **hata vermeden bittiğini gör**
 4. Şu dosyaları `_as-baseline`'dan bu projeye kopyala:
 
