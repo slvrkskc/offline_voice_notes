@@ -173,7 +173,7 @@ whisper.cpp **v1.8.3'ten beri Silero VAD'ı ggml formatında dahili olarak deste
 |---|---|---|---|
 | **whisper.cpp** | v1.9.5 (6 Eki 2026) | MIT | ggml; dahili Silero VAD v6.2.0; Vulkan/OpenCL backend'leri var ama mobilde olgunluk ⚠️ |
 | **llama.cpp** | master | MIT | ggml; **GBNF grammar + JSON Schema → grammar dönüşümü** (ADR-007'nin temeli) |
-| **SQLCipher for Android** | AAR 4.19.1 | BSD-tarzı (Zetetic) | FTS5 3.4.0'dan beri destekliyor ⚠️ 4.19.1'de `PRAGMA compile_options` ile doğrulanmalı (S3); Room ile entegrasyon dokümante |
+| **SQLCipher for Android** | AAR 4.19.1 | ✅ **BSD-3-Clause** (Copyright ZETETIC LLC) | FTS5 3.4.0'dan beri destekliyor ⚠️ 4.19.1'de `PRAGMA compile_options` ile doğrulanmalı (S3); Room ile entegrasyon dokümante. **Telif bildirimi ikili dağıtımda kullanıcıya ulaşmalı** → açık kaynak lisans ekranı gerekiyor |
 | **Google Tink** (dosya şifreleme) | güncel | Apache-2.0 | **S12 kararı.** Streaming AEAD ile ses dosyaları şifrelenir. `androidx.security:security-crypto` **deprecated** olduğu için onun yerine geçiyor |
 | ~~`androidx.security:security-crypto`~~ | 1.1.0 | Apache-2.0 | ❌ **Kullanılmayacak.** Tüm API'ler 1.1.0'da deprecated, yeni sürüm planı yok. `EncryptedFile` için resmî öneri `java.io.File` (yani "kendin çöz"), anahtar için `KeyGenerator` + AndroidKeyStore |
 | **Zemberek-NLP** (morfoloji) | 0.17.1 (2019) | Apache-2.0 | Yavaş bakım modunda; TR lemmatizasyon için en olgun seçenek (S9) |
@@ -1132,7 +1132,7 @@ gantt
 
 ### MVP — "Çevrimdışı transkript, kanıtlanabilir gizlilikle"
 
-**Kapsam:** Tek platform (Android). Kayıt (60 sn'lik parçalar) → VAD → Whisper `small` → transkript + zaman damgalı segmentler → FTS5 arama (prefix + diakritik katlama) → SQLCipher + Keystore → **ekstraktif** özet + kural tabanlı etiket → model kullanıcı importu veya install-time PAD → `INTERNET` izni yok + CI gate.
+**Kapsam:** Tek platform (Android). Kayıt (60 sn'lik parçalar) → VAD → Whisper `small` → transkript + zaman damgalı segmentler → FTS5 arama (prefix + diakritik katlama) → SQLCipher + Keystore + Tink → **ekstraktif** özet + kural tabanlı etiket → model kullanıcı importu veya install-time PAD → `INTERNET` izni yok + CI gate → **Açık Kaynak Lisansları ekranı** (MIT ve BSD-3-Clause bildirimlerinin kullanıcıya ulaşması zorunlu; bkz. [docs/THIRD-PARTY.md](docs/THIRD-PARTY.md)).
 
 **Kapsam dışı:** LLM, iOS, anlamsal arama, diarization, arka plan işleme politikaları (ön planda işler).
 

@@ -28,7 +28,9 @@ Android Studio tek başına şunların hepsini getiriyor: **JDK 17+ (bundled JBR
    **Yalnızca Android Studio'yu indir.** NDK ve CMake'i ayrı ayrı (ndk/downloads veya cmake.org üzerinden) indirme — aşağıdaki SDK Manager adımı ikisini de doğru yere kurar. Elle kurulan NDK/CMake'i Gradle bulamaz ve sürüm uyumsuzluğu çıkarır.
 2. Kurulumda **Android SDK**, **SDK Platform-Tools** ve **Android Virtual Device** seçili kalsın
 3. İlk açılışta **kullanım istatistiği (usage statistics) sorusuna HAYIR de.**
-   Android SDK Lisans Sözleşmesi madde 6, SDK'nın benzersiz tanımlayıcı, IP adresi ve araç kullanım bilgisi toplayabileceğini ama bunun **onaya bağlı** olduğunu söylüyor. Bu telemetri IDE hakkındadır, uygulamaya hiçbir şey eklemez — yani ürünün gizlilik iddiasını etkilemez. Yine de reddediyoruz: projenin değerleriyle tutarlı ve zaten gereksiz. (Sonradan: Settings → Appearance & Behavior → System Settings → Data Sharing.)
+   Android SDK Lisans Sözleşmesi madde 6, SDK'nın benzersiz tanımlayıcı, IP adresi ve araç kullanım bilgisi toplayabileceğini ama bunun **onaya bağlı** olduğunu söylüyor. Bu telemetri IDE hakkındadır, uygulamaya hiçbir şey eklemez — yani ürünün gizlilik iddiasını etkilemez. Yine de reddediyoruz: projenin değerleriyle tutarlı ve zaten gereksiz. (Sonradan: Settings → Appearance & Behavior → System Settings → Data Sharing; ayarlar penceresinde "Data Sharing" diye aratmak en hızlısı.)
+
+   **Ayrıca: Gemini / yapay zeka özellikleri ayrı bir onaydır.** Rabbit sürümünde Gemini entegrasyonu öne çıkıyor. Etkinleştirilirse kodun bağlam olarak Google'a gönderilir — kullanım istatistiklerinden çok daha fazla veri. Genelde Google hesabıyla giriş ister, yani kazara açılması zor. Kod zaten public bir repoda olduğu için felaket değil; ama **bilinçli bir karar olsun**, kurulum sırasında fark etmeden geçilmiş olmasın.
 4. SDK Manager'dan ek olarak kur:
    - **NDK (Side by side)** — S1'de whisper.cpp derlemek için zorunlu
    - **CMake** — aynı sebep

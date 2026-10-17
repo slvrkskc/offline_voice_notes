@@ -1,5 +1,8 @@
 # Offline Voice Notes
 
+[![CI](https://github.com/slvrkskc/offline_voice_notes/actions/workflows/ci.yml/badge.svg)](https://github.com/slvrkskc/offline_voice_notes/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+
 On-device voice notes for Turkish and English. Record, transcribe, summarize and
 auto-tag — entirely on the phone, with no network permission at all.
 
@@ -97,6 +100,7 @@ mark each one accordingly.
 ```
 ARCHITECTURE.md          Architecture, ADRs, data model, spike list
 docs/SETUP.md            Toolchain setup and verification
+docs/THIRD-PARTY.md      Licence inventory and the gate for adding dependencies
 docs/spikes/             Spike results — measurements and the decisions they drove
 app/                     Compose host; the privacy-critical manifest
 core/                    crypto, database, audio, model-manager, device
@@ -104,9 +108,13 @@ domain/                  Pure Kotlin, no Android imports (KMP-ready)
 ml/                      Engine interfaces + the shared C/C++ core (whisper.cpp, llama.cpp)
 pipeline/                Orchestrator, durable queue, foreground service
 feature/                 UI
-benchmark/               Golden-set harness, macrobenchmark
+benchmark/golden/        Golden audio set — manifest and reference transcripts only
 tools/                   CI gates, including the network-permission check
 ```
+
+Audio recordings and model weights are never committed: recordings are personal
+data, and weights are large and carry their own upstream licences. CI enforces
+both, so the rule cannot quietly erode.
 
 ---
 
