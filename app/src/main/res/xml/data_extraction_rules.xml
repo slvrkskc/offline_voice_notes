@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Threat T3 (ARCHITECTURE.md §13.1): cloud backups and device-to-device
+  transfer must not carry notes, audio or metadata off the device.
+
+  We exclude everything rather than listing what to exclude, so a new
+  directory added later is excluded by default instead of leaking silently.
+-->
+<data-extraction-rules>
+
+    <!-- Google One / Play backup -->
+    <cloud-backup>
+        <exclude domain="root" />
+        <exclude domain="database" />
+        <exclude domain="sharedpref" />
+        <exclude domain="file" />
+        <exclude domain="external" />
+        <exclude domain="device_root" />
+        <exclude domain="device_database" />
+        <exclude domain="device_sharedpref" />
+        <exclude domain="device_file" />
+    </cloud-backup>
+
+    <!-- Phone-to-phone transfer during setup -->
+    <device-transfer>
+        <exclude domain="root" />
+        <exclude domain="database" />
+        <exclude domain="sharedpref" />
+        <exclude domain="file" />
+        <exclude domain="external" />
+        <exclude domain="device_root" />
+        <exclude domain="device_database" />
+        <exclude domain="device_sharedpref" />
+        <exclude domain="device_file" />
+    </device-transfer>
+
+</data-extraction-rules>

@@ -1,0 +1,29 @@
+# Normalize line endings so a Windows checkout and a Linux CI runner agree.
+* text=auto
+
+# Shell scripts MUST stay LF. With CRLF the shebang line ends in \r and the
+# script fails on Linux with a confusing "bad interpreter" error - which would
+# silently disable the S2 network-permission gate in CI.
+*.sh      text eol=lf
+gradlew   text eol=lf
+
+# Windows-only scripts keep CRLF.
+*.bat     text eol=crlf
+*.cmd     text eol=crlf
+
+# Binary - never touch.
+*.jar     binary
+*.so      binary
+*.a       binary
+*.o       binary
+*.gguf    binary
+*.bin     binary
+*.litertlm binary
+*.task    binary
+*.wav     binary
+*.opus    binary
+*.png     binary
+*.jpg     binary
+*.webp    binary
+*.keystore binary
+*.jks     binary

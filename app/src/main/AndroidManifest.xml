@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  PRIVACY-CRITICAL FILE.
+
+  This app's core claim is that it cannot send data anywhere, because it has no
+  network permission at all. That claim is enforced by the OS, not by our code,
+  which is what makes it verifiable rather than a promise.
+
+  Two things protect it:
+    1. The removals below. Library manifests are merged into this one, so a
+       dependency can silently reintroduce INTERNET. `tools:node="remove"`
+       actively rejects it at merge time instead of merely not declaring it.
+    2. tools/verify-no-network.sh, run in CI against the BUILT artifact.
+       "Not in the source" and "not in the APK" are different statements;
+       only the second one matters.
+
+  Before adding any permission here, see ARCHITECTURE.md §13.3.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ========================================================= -->
+    <!--  Permissions we actually need                             -->
+    <!-- ========================================================= -->
+
+    <!-- Recording. The only sensitive permission the app requests. -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- Post-recording processing continues while the app is backgrounded.
+         mediaProcessing is the semantically correct FGS type for audio work and
+         has its own 6h/24h budget, separate from dataSync (ARCHITECTURE.md §7.1). -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROCESSING" />
+
+    <!-- Progress notification for the processing service (API 33+). -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- App lock: the DB passphrase is wrapped by an auth-bound Keystore key. -->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+
+    <!-- ========================================================= -->
+    <!--  Permissions we actively REJECT                           -->
+    <!--  Do not remove these lines. They are the privacy claim.   -->
+    <!-- ========================================================= -->
+
+    <uses-permission
+        android:name="android.permission.INTERNET"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.ACCESS_NETWORK_STATE"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.ACCESS_WIFI_STATE"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.CHANGE_NETWORK_STATE"
+        tools:node="remove" />
+
+    <application
+        android:name=".VoiceNotesApplication"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:theme="@style/Theme.VoiceNotes"
+        android:supportsRtl="true"
+        android:largeHeap="false"
+        tools:targetApi="31"
+
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="false">
+        <!--
+          allowBackup=false + dataExtractionRules: threat T3 in ARCHITECTURE.md
+          §13.1. Even if a backup were taken, the Keystore key cannot leave the
+          device, so the encrypted DB would be unreadable - but we exclude it
+          anyway rather than relying on a single layer.
+        -->
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Declared here so the manifest reflects the architecture from day one;
+             the implementation lands with the pipeline work (ARCHITECTURE.md §7.1). -->
+        <service
+            android:name="pipeline.service.NoteProcessingService"
+            android:exported="false"
+            android:foregroundServiceType="mediaProcessing"
+            tools:ignore="MissingClass" />
+
+    </application>
+
+</manifest>

@@ -1,0 +1,59 @@
+# --- Gradle / Android ------------------------------------------------------
+.gradle/
+build/
+*/build/
+**/build/
+local.properties
+.cxx/
+captures/
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+output.json
+
+# --- IDE -------------------------------------------------------------------
+.idea/
+!.idea/icon.png
+*.iml
+.kotlin/
+
+# --- Native ----------------------------------------------------------------
+# whisper.cpp / llama.cpp come in as git submodules; their build output does not.
+ml/native/third_party/*/build/
+*.so
+*.o
+*.a
+
+# --- Models ----------------------------------------------------------------
+# NEVER commit model weights. They are hundreds of MB and are delivered via
+# Play Asset Delivery (ADR-004). Only the registry + SHA-256 hashes are tracked.
+*.gguf
+*.bin
+*.litertlm
+*.task
+models/
+!core/model-manager/src/main/assets/model-registry.json
+
+# --- Golden audio set ------------------------------------------------------
+# Recordings of real voices are personal data and stay off the repo
+# (ARCHITECTURE.md §14.1). Only the manifest, hashes and reference
+# transcripts are tracked.
+benchmark/golden/audio/
+*.wav
+*.m4a
+*.opus
+!benchmark/golden/manifest.json
+!benchmark/golden/reference/**
+
+# --- Secrets / signing -----------------------------------------------------
+*.jks
+*.keystore
+keystore.properties
+signing.properties
+
+# --- Misc ------------------------------------------------------------------
+*.log
+.DS_Store
+Thumbs.db
