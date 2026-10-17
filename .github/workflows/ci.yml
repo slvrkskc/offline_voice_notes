@@ -1,0 +1,73 @@
+name: CI
+
+# Runs from day one, before the project is buildable, because the checks that
+# matter most here do not need a build: they guard the manifest lines that
+# carry the project's privacy claim.
+#
+# The build and the APK-level network check (tools/verify-no-network.sh) join
+# this workflow at spike S2, once the Gradle baseline exists.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  guards:
+    name: Privacy guards and docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Privacy guards in the manifest
+        run: tools/verify-manifest-guards.sh
+
+      - name: Shell script syntax
+        run: |
+          for f in tools/*.sh; do
+            echo "checking $f"
+            bash -n "$f"
+          done
+
+      - name: ShellCheck
+        run: shellcheck --severity=error tools/*.sh
+
+      - name: XML is well-formed
+        run: |
+          python3 - <<'PY'
+          import glob, sys, xml.dom.minidom as minidom
+          files = glob.glob('app/src/main/**/*.xml', recursive=True)
+          if not files:
+              sys.exit('no XML files found - did the layout change?')
+          for path in files:
+              minidom.parse(path)
+              print('ok', path)
+          PY
+
+      - name: Golden set manifest is valid JSON
+        run: |
+          python3 - <<'PY'
+          import json
+          with open('benchmark/golden/manifest.json', encoding='utf-8') as fh:
+              data = json.load(fh)
+          assert 'version' in data and 'clips' in data, 'manifest is missing required keys'
+          print('ok, %d clip(s) declared' % len(data['clips']))
+          PY
+
+      - name: No audio or model weights committed
+        run: |
+          # Belt and braces around .gitignore. Audio is personal data and model
+          # weights are hundreds of MB with their own licences; neither belongs
+          # in git history, where a mistake cannot be taken back.
+          if git ls-files | grep -iE '\.(wav|m4a|opus|mp3|gguf|bin|litertlm|task)$'; then
+            echo "::error::binary audio or model files are tracked - see docs/THIRD-PARTY.md"
+            exit 1
+          fi
+          echo "ok, none tracked"
+
+      - name: Documentation links resolve
+        run: tools/verify-doc-links.sh
