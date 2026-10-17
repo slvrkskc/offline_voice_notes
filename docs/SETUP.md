@@ -1,6 +1,6 @@
 # Geliştirme Ortamı Kurulumu
 
-> Bu doküman Aşama 0'ın (bkz. [LEARNING-PLAN.md](LEARNING-PLAN.md)) kurulum kısmıdır ve **S2'nin ön koşuludur**.
+> Bu doküman geliştirme ortamının kurulumunu anlatır ve **S2 spike'ının ön koşuludur** (bkz. [ARCHITECTURE.md §17](../ARCHITECTURE.md#17-riskli-noktalar--spike-listesi)).
 > **Tarih:** 17 Ekim 2026
 
 ---

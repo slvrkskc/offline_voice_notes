@@ -57,3 +57,7 @@ signing.properties
 *.log
 .DS_Store
 Thumbs.db
+
+# --- Personal notes (deliberately not part of the repo) --------------------
+# A personal study plan, kept locally. See the commit that removed it.
+docs/LEARNING-PLAN.md

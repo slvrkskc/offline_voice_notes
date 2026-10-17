@@ -139,6 +139,12 @@ baseline exists; writing unverifiable version combinations would be guesswork.
 
 ## License
 
-Not chosen yet. The dependency set is permissive throughout (whisper.cpp and
-llama.cpp MIT; Silero VAD MIT; Qwen3 and Tink Apache-2.0), so either MIT or
-Apache-2.0 works.
+Licensed under the **Apache License 2.0** — see [LICENSE](LICENSE).
+
+Copyright 2026 slvrkskc
+
+Apache-2.0 was chosen over MIT for its explicit patent grant, which matters for
+a project built around on-device inference. The dependency set is permissive and
+compatible throughout: whisper.cpp, llama.cpp and Silero VAD are MIT; Qwen3,
+Google Tink and sherpa-onnx are Apache-2.0. Model weights are **not**
+redistributed in this repository and carry their own upstream licenses.
