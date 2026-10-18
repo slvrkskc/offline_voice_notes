@@ -23,6 +23,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Scripts are executable
+        # Git stores the executable bit, and a file created on Windows does not
+        # get one by default. Without this the next step fails with a bare
+        # "Permission denied", which says nothing about the actual cause.
+        # Fix: git update-index --chmod=+x tools/<script>.sh
+        run: |
+          missing=0
+          for f in tools/*.sh; do
+            if [ -x "$f" ]; then
+              echo "ok  $f"
+            else
+              echo "::error file=$f::not executable - run: git update-index --chmod=+x $f"
+              missing=$((missing + 1))
+            fi
+          done
+          [ "$missing" -eq 0 ]
+
       - name: Privacy guards in the manifest
         run: tools/verify-manifest-guards.sh
 
